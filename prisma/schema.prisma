@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Sempre a primeira letra é maiúscula
+// Modelos que representam as tabelas no banco de dados
+
+model User {
+  id        Int     @id @default(autoincrement())
+  name      String
+  email     String  @unique
+  password  String
+  state     String
+  city      String
+  telephone String  @unique @default("00-00000-0000")
+  animals   Animal[]
+
+  @@map("users")
+}
+
+// Usar uma interrogação no final faz o campo ser opcional, ex: name String?
+// amount é um tipo de quantidade
+
+model Specie {
+  id     Int     @id @default(autoincrement())
+  name   String
+  animal Animal?
+
+  @@map("species")
+}
+
+model Animal {
+  id          Int     @id @default(autoincrement())
+  name        String?
+  sex         String  @default("UNKNOWN")
+  age         Int
+  animalSize  String
+  state       String
+  city        String
+  description String
+  photoAnimal String
+  user        User    @relation(fields: [userId], references: [id])
+  userId      Int
+  specie      Specie  @relation(fields: [specieId], references: [id])
+  specieId    Int     @unique
+
+  @@map("animals")
+}
+
+model SubAnimalCategory {
+  id             Int            @id @default(autoincrement())
+  categoryId     Int            @unique
+  animalCategory AnimalCategory @relation(fields: [categoryId], references: [id])
+
+  @@map("SubAnimalCategories")
+}
+
+model AnimalCategory {
+  id                Int                @id @default(autoincrement())
+  name              String
+  subAnimalCategory SubAnimalCategory?
+
+  @@map("animalCategories")
+}
