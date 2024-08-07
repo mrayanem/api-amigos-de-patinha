@@ -5,7 +5,7 @@ export class CreateUserController {
   constructor(private createUserService: CreateUserService) {}
   
   async handle(req: Request, res: Response) {
-      const { name, email, password, state, city, telephone } = req.body;
+      const { body : { name, email, password, state, city, telephone, roleId }, userId } = req;
 
       const user = await this.createUserService.execute({
           name,
@@ -13,7 +13,9 @@ export class CreateUserController {
           password,
           state,
           city,
-          telephone
+          telephone,
+          roleId,
+          userId
       });
 
       return res.json(user).status(201)

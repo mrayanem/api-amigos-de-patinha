@@ -1,3 +1,4 @@
+import { is } from "@middlewares/permissions";
 import prismaClient from "../../prisma";
 import { hash } from "bcryptjs";
 
@@ -8,10 +9,12 @@ interface UserRequest {
   state: string;
   city: string;
   telephone: string;
+  roleId: string;
+  userId: string;
 }
 
 export class CreateUserService {
-  async execute({ name, email, password, state, city, telephone }: UserRequest) {
+  async execute({ name, email, password, state, city, telephone, roleId, userId }: UserRequest) {
 
     //verificar se ele enviou um email
     if (!email) {
@@ -61,6 +64,15 @@ export class CreateUserService {
 
     const passwordHash = await hash(password, 8)
 
+
+    const roleUser = await prismaClient.role.findFirst({
+      where: userId ? { id: roleId } : { name: 'client' }
+    })
+
+    if (!roleUser?.id) {
+      throw new Error("Perfil do usuario inexistente!");
+    }
+
     const user = await prismaClient.user.create({
       data: {
         name,
@@ -69,6 +81,7 @@ export class CreateUserService {
         city,
         telephone,
         password: passwordHash,
+        roleId: roleUser.id
       },
       select: {
         id: true,

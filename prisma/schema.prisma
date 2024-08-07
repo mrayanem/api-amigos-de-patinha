@@ -14,14 +14,18 @@ datasource db {
 // Modelos que representam as tabelas no banco de dados
 
 model User {
-  id        Int     @id @default(autoincrement())
-  name      String
-  email     String  @unique
-  password  String
-  state     String
-  city      String
-  telephone String  @unique @default("00-00000-0000")
-  animals   Animal[]
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  password   String
+  state      String
+  city       String
+  telephone  String   @unique @default("00-00000-0000")
+  animals    Animal[]
+  //role      UserRole @relation(fields: [userRoleRole_id, userRoleUser_id], references: [role_id, user_id])
+  role       Role     @relation(fields: [roleId], references: [id])
+  roleId     String   @unique
+  created_at DateTime @default(now())
 
   @@map("users")
 }
@@ -30,43 +34,57 @@ model User {
 // amount é um tipo de quantidade
 
 model Specie {
-  id     Int     @id @default(autoincrement())
-  name   String
-  animal Animal?
+  id         String   @id @default(uuid())
+  name       String
+  animal     Animal?
+  created_at DateTime @default(now())
 
   @@map("species")
 }
 
 model Animal {
-  id          Int     @id @default(autoincrement())
+  id          String   @id @default(uuid())
   name        String?
-  sex         String  @default("UNKNOWN")
+  sex         String   @default("UNKNOWN")
   age         Int
   animalSize  String
   state       String
   city        String
   description String
   photoAnimal String
-  user        User    @relation(fields: [userId], references: [id])
-  userId      Int
-  specie      Specie  @relation(fields: [specieId], references: [id])
-  specieId    Int     @unique
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  specie      Specie   @relation(fields: [specieId], references: [id])
+  specieId    String   @unique
+  created_at  DateTime @default(now())
 
   @@map("animals")
 }
 
 model SubAnimalCategory {
-  id             Int            @id @default(autoincrement())
-  categoryId     Int            @unique
+  id             String         @id @default(uuid())
+  categoryId     String         @unique
   animalCategory AnimalCategory @relation(fields: [categoryId], references: [id])
+  created_at     DateTime       @default(now())
 
   @@map("SubAnimalCategories")
 }
 
 model AnimalCategory {
-  id                Int                @id @default(autoincrement())
+  id                String             @id @default(uuid())
   name              String
   subAnimalCategory SubAnimalCategory?
+  created_at        DateTime           @default(now())
 
   @@map("animalCategories")
+}
+
+model Role {
+  id          String   @id @default(uuid()) // talvez? UUID
+  name        String   @unique
+  description String
+  created_at  DateTime @default(now())
+  User        User[]
+
+  @@map("roles")
 }
