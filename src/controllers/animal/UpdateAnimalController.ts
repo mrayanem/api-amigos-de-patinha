@@ -7,7 +7,7 @@ export class UpdateAnimalController {
   async handle(req: Request, res: Response) {
     const { id } = req.params;
 
-    const { userId, name, sexo, age, animalSize, specieId, state, city, description, photoAnimal } = req.body;
+    const { userId, body: { name, sexo, age, animalSize, specieId, state, city, description, photoAnimal } } = req.body;
 
     if (!id) {
         return res.status(400)

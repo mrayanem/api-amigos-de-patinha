@@ -9,8 +9,8 @@ interface UserRequest {
   state: string;
   city: string;
   telephone: string;
-  roleId: string;
-  userId: string;
+  roleId?: string;
+  userId?: string;
 }
 
 export class CreateUserService {
@@ -64,9 +64,9 @@ export class CreateUserService {
 
     const passwordHash = await hash(password, 8)
 
-
+    console.log(userId, roleId)
     const roleUser = await prismaClient.role.findFirst({
-      where: userId ? { id: roleId } : { name: 'client' }
+      where: userId && roleId ? { id: roleId } : { name: 'client' }
     })
 
     if (!roleUser?.id) {

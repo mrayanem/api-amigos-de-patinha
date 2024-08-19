@@ -5,13 +5,13 @@ export class CreateAnimalController {
   constructor(private createAnimalService: CreateAnimalService) {}
 
   async handle(req: Request, res: Response) {
-    const { userId, name, sexo, age, animalSize, specieId, state, city, description, photoAnimal } = req.body;
+    const { userId, body: { name, sex, age, animalSize, specieId, state, city, description, photoAnimal } } = req;
 
     try {
       const animal = await this.createAnimalService.execute({
         userId,
         name,
-        sexo,
+        sex,
         age,
         animalSize,
         specieId,
@@ -22,7 +22,7 @@ export class CreateAnimalController {
       });
 
       return res.json(animal);
-    } catch (error) {
+    } catch (error: any) {
       return res.status(400).json({ error: error.message });
     }
   }

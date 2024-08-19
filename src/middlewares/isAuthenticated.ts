@@ -19,8 +19,6 @@ export const isAuthenticated = () => {
 
     const [, token] = authToken.split(" ")
 
-    console.log(token)
-
     // Obter o segredo do JWT
     const jwtSecret = process.env.JWT_SECRET
     if (!jwtSecret) {
@@ -34,9 +32,7 @@ export const isAuthenticated = () => {
       // Validar token
       const { sub } = verify(token, jwtSecret) as PayLoad
 
-      console.log(sub)
-
-      req.body.userId = parseInt(sub)
+      req.userId = sub
 
       return next()
     } catch (err) {

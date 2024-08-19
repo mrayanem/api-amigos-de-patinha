@@ -24,8 +24,10 @@ model User {
   animals    Animal[]
   //role      UserRole @relation(fields: [userRoleRole_id, userRoleUser_id], references: [role_id, user_id])
   role       Role     @relation(fields: [roleId], references: [id])
-  roleId     String   @unique
+  roleId     String
+
   created_at DateTime @default(now())
+  updated_at DateTime @updatedAt @default(now())
 
   @@map("users")
 }
@@ -37,8 +39,9 @@ model Specie {
   id         String   @id @default(uuid())
   name       String
   animal     Animal?
-  created_at DateTime @default(now())
 
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt @default(now())
   @@map("species")
 }
 
@@ -56,7 +59,9 @@ model Animal {
   userId      String
   specie      Specie   @relation(fields: [specieId], references: [id])
   specieId    String   @unique
+
   created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt @default(now())
 
   @@map("animals")
 }
@@ -65,7 +70,9 @@ model SubAnimalCategory {
   id             String         @id @default(uuid())
   categoryId     String         @unique
   animalCategory AnimalCategory @relation(fields: [categoryId], references: [id])
+
   created_at     DateTime       @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("SubAnimalCategories")
 }
@@ -74,7 +81,9 @@ model AnimalCategory {
   id                String             @id @default(uuid())
   name              String
   subAnimalCategory SubAnimalCategory?
+
   created_at        DateTime           @default(now())
+  updated_at DateTime @updatedAt @default(now())
 
   @@map("animalCategories")
 }
@@ -83,8 +92,11 @@ model Role {
   id          String   @id @default(uuid()) // talvez? UUID
   name        String   @unique
   description String
-  created_at  DateTime @default(now())
+
   User        User[]
+
+  created_at  DateTime @default(now())
+  updated_at DateTime @updatedAt @default(now())
 
   @@map("roles")
 }

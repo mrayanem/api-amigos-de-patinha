@@ -1,12 +1,12 @@
 import prismaClient from "../../prisma";
 
 interface AnimalRequest {
-  userId: number;
+  userId: string;
   name: string;
-  sexo: string;
+  sex: string;
   age: number;
   animalSize: string;
-  specieId: number;
+  specieId: string;
   state: string;
   city: string;
   description: string;
@@ -14,7 +14,7 @@ interface AnimalRequest {
 }
 
 export class CreateAnimalService {
-  async execute({ userId, name, sexo, age, animalSize, specieId, state, city, description, photoAnimal }: AnimalRequest) {
+  async execute({ userId, name, sex, age, animalSize, specieId, state, city, description, photoAnimal }: AnimalRequest) {
 
     // Verificar se o usuário está cadastrado
     /* const userExists = await prismaClient.user.findUnique({
@@ -37,7 +37,7 @@ export class CreateAnimalService {
   }
 
     // Verificar se as informações do animal são válidas
-    if (!name || !sexo || !age || !animalSize || !specieId || !state || !city || !description || !photoAnimal) {
+    if (!name || !sex || !age || !animalSize || !specieId || !state || !city || !description || !photoAnimal) {
       throw new Error("Informações do animal inválidas.");
     }
 
@@ -46,7 +46,7 @@ export class CreateAnimalService {
       data: {
         userId,
         name,
-        sexo,
+        sex,
         age,
         animalSize,
         specieId,

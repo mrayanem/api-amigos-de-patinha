@@ -11,6 +11,7 @@ import express, { Router, Request, Response } from "express"
 import { AuthUserController } from "@controllers/user/AuthUserController"
 import { AuthUserService } from "@services/user/AuthUserService"
 import { is } from "@middlewares/permissions"
+import { RegisterUserController } from "@controllers/user/RegisterUserController"
 
 const userRoutes: Router = express.Router()
 
@@ -57,9 +58,9 @@ userRoutes
   userRoutes
   .post('/register', async (req: Request, res: Response) => {
     const createUserService = new CreateUserService()
-    const createUserController = new CreateUserController(createUserService)
+    const registerUserController = new RegisterUserController(createUserService)
     
-    return createUserController.handle(req, res)
+    return registerUserController.handle(req, res)
   })
   
 export default userRoutes
