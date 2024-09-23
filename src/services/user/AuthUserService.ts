@@ -13,6 +13,9 @@ export class AuthUserService {
         const user = await prismaClient.user.findUnique({
             where: {
                 email: email
+            },
+            include: {
+                role: true
             }
         });
         
@@ -53,7 +56,8 @@ export class AuthUserService {
             id: user.id,
             email: user.email,
             name: user.name,
-            token: token
+            token: token,
+            role: user.role.name
         };
     }
 }

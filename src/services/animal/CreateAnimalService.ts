@@ -3,29 +3,21 @@ import prismaClient from "../../prisma";
 interface AnimalRequest {
   userId: string;
   name: string;
-  sex: string;
+  sex: 'MACHO'|'FEMEA';
   age: number;
-  animalSize: string;
+  animalSize: 'PEQUENO'|'GRANDE'|'MEDIO';
   specieId: string;
   state: string;
   city: string;
   description: string;
   photoAnimal: string;
+  livesWellIn: 'APARTAMENTO'|'CASA';
+  sociableWith: 'DESCONHECIDOS'|'CRIANCAS'|'OUTROS_ANIMAIS';
+  vetCare: 'CASTRADO'|'VERMIFUGADO'|'VACINADO'
 }
 
 export class CreateAnimalService {
-  async execute({ userId, name, sex, age, animalSize, specieId, state, city, description, photoAnimal }: AnimalRequest) {
-
-    // Verificar se o usuário está cadastrado
-    /* const userExists = await prismaClient.user.findUnique({
-      where: { id: userId },
-    });
-
-    if (!userExists) {
-      throw new Error("Usuário não cadastrado.");
-    }
-    */
-    
+  async execute({ userId, name, sex, age, animalSize, specieId, state, city, description, photoAnimal, livesWellIn, sociableWith, vetCare }: AnimalRequest) {
 
     // Verificar se a espécie está cadastrada
     const specieExists = await prismaClient.specie.findUnique({
@@ -37,7 +29,7 @@ export class CreateAnimalService {
   }
 
     // Verificar se as informações do animal são válidas
-    if (!name || !sex || !age || !animalSize || !specieId || !state || !city || !description || !photoAnimal) {
+    if (!name || !sex || !age || !animalSize || !specieId || !state || !city || !description || !photoAnimal || !livesWellIn || !sociableWith || !vetCare) {
       throw new Error("Informações do animal inválidas.");
     }
 
@@ -54,6 +46,9 @@ export class CreateAnimalService {
         city,
         description,
         photoAnimal,
+        livesWellIn,
+        sociableWith,
+        vetCare,
       },
     });
 

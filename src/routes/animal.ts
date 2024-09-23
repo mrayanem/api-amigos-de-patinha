@@ -3,17 +3,18 @@ import { CreateAnimalController } from "../controllers/animal/CreateAnimalContro
 import { ListAnimalsController } from "../controllers/animal/ListAnimalsController"
 import { RemoveAnimalController } from "../controllers/animal/RemoveAnimalController"
 import { UpdateAnimalController } from "../controllers/animal/UpdateAnimalController"
-import { isAuthenticated } from "../middlewares/isAuthenticated"
 import { CreateAnimalService } from "../services/animal/CreateAnimalService"
 import { ListAnimalsService } from "../services/animal/ListAnimalService"
 import { RemoveAnimalService } from "../services/animal/RemoveAnimalService"
 import { UpdateAnimalsService } from "../services/animal/UpdateAnimalService"
 
+import { createAnimalValidation } from "./validations"
+
 const animalRoutes: Router = express.Router()
 
 // --ROTAS ANIMAL CADASTRO
 animalRoutes
-  .post('/animals', async (req, res) => {
+  .post('/animals', createAnimalValidation, async (req, res) => {
     const createAnimalService = new CreateAnimalService()
     const createAnimalController = new CreateAnimalController(createAnimalService)
     

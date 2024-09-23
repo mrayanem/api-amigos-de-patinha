@@ -34,10 +34,16 @@ model User {
 
 // Usar uma interrogação no final faz o campo ser opcional, ex: name String?
 // amount é um tipo de quantidade
+enum SPECIE {
+  GATO
+  CACHORRO
+
+  @@map("specie")
+}
 
 model Specie {
   id         String   @id @default(uuid())
-  name       String
+  name       SPECIE
   animal     Animal?
 
   created_at DateTime @default(now())
@@ -45,16 +51,57 @@ model Specie {
   @@map("species")
 }
 
+enum SEX {
+  MACHO
+  FEMEA
+
+  @@map("sexo")
+}
+
+enum ANIMALSIZE {
+  PEQUENO
+  MEDIO
+  GRANDE
+
+  @@map("porte")
+}
+
+enum LIVESWELLIN {
+  APARTAMENTO
+  CASA
+
+  @@map("livesWellIn")
+}
+
+enum SOCIABLEWITH {
+  OUTROS_ANIMAIS
+  CRIANCAS
+  DESCONHECIDOS
+
+  @@map("sociable")
+}
+
+enum VETCARE {
+  CASTRADO
+  VACINADO
+  VERMIFUGADO
+
+  @@map("vetcare")
+}
+
 model Animal {
   id          String   @id @default(uuid())
   name        String?
-  sex         String   @default("UNKNOWN")
+  sex         SEX
   age         Int
-  animalSize  String
+  animalSize  ANIMALSIZE
   state       String
   city        String
   description String
   photoAnimal String
+  livesWellIn LIVESWELLIN
+  sociableWith SOCIABLEWITH
+  vetCare VETCARE
   user        User     @relation(fields: [userId], references: [id])
   userId      String
   specie      Specie   @relation(fields: [specieId], references: [id])

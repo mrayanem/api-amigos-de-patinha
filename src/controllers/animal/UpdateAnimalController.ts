@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { UpdateAnimalsService } from '../../services/animal/UpdateAnimalService';
+import { parse } from 'uuid';
 
 export class UpdateAnimalController {
   constructor(private updateAnimalsService: UpdateAnimalsService) {}
@@ -7,16 +8,16 @@ export class UpdateAnimalController {
   async handle(req: Request, res: Response) {
     const { id } = req.params;
 
-    const { userId, body: { name, sexo, age, animalSize, specieId, state, city, description, photoAnimal } } = req.body;
+    const { userId, body: { name, sex, age, animalSize, specieId, state, city, description, photoAnimal, livesWellIn, sociableWith, vetCare } } = req.body;
 
     if (!id) {
         return res.status(400)
     }
 
-    const newId = parseInt(id)
+    const newId = (id)
 
     try {
-        const animal = await this.updateAnimalsService.execute(newId, { userId, name, sexo, age, animalSize, specieId, state, city, description, photoAnimal })
+        const animal = await this.updateAnimalsService.execute(newId, { userId, name, sex, age, animalSize, specieId, state, city, description, photoAnimal, livesWellIn, sociableWith, vetCare })
 
         return res.json(animal).status(200)
     } catch (error) {

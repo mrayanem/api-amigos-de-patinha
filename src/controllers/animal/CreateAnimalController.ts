@@ -1,11 +1,18 @@
 import { Request, Response } from 'express';
 import { CreateAnimalService } from '../../services/animal/CreateAnimalService';
+import { validationResult } from 'express-validator';
 
 export class CreateAnimalController {
   constructor(private createAnimalService: CreateAnimalService) {}
 
   async handle(req: Request, res: Response) {
-    const { userId, body: { name, sex, age, animalSize, specieId, state, city, description, photoAnimal } } = req;
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+
+    const { userId, body: { name, sex, age, animalSize, specieId, state, city, description, photoAnimal, livesWellIn, sociableWith, vetCare} } = req;
 
     try {
       const animal = await this.createAnimalService.execute({
@@ -19,6 +26,9 @@ export class CreateAnimalController {
         city,
         description,
         photoAnimal,
+        livesWellIn,
+        sociableWith,
+        vetCare,
       });
 
       return res.json(animal);

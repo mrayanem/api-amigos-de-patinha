@@ -11,7 +11,7 @@ export class RemoveAnimalController {
         return res.status(400)
     }
 
-    const newId = parseInt(id)
+    const newId = (id)
 
     try {
         await this.removeAnimalService.execute(newId)

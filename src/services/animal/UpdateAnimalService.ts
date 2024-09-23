@@ -1,20 +1,23 @@
 import prismaClient from "../../prisma";
 
 interface AnimalRequest {
-  userId?: number;
+  userId?: string;
   name?: string;
-  sexo?: string;
+  sex?: 'MACHO'|'FEMEA';
   age?: number;
-  animalSize?: string;
-  specieId?: number;
+  animalSize?: 'PEQUENO'|'GRANDE'|'MEDIO';
+  specieId?: string;
   state?: string;
   city?: string;
   description?: string;
   photoAnimal?: string;
+  livesWellIn?: 'APARTAMENTO'|'CASA';
+  sociableWith?: 'DESCONHECIDOS'|'CRIANCAS'|'OUTROS_ANIMAIS';
+  vetCare?: 'CASTRADO'|'VERMIFUGADO'|'VACINADO'
 }
 
 export class UpdateAnimalsService {
-  execute(animalId: number, animal: AnimalRequest) {
+  execute(animalId: string, animal: AnimalRequest) {
     return prismaClient.animal.update({
       data: {
         ...animal
