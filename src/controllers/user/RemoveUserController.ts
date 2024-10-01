@@ -11,10 +11,8 @@ export class RemoveUserController {
         return res.status(400)
     }
 
-    const newId = parseInt(id)
-
     try {
-        await this.removeUserService.execute(newId)
+        await this.removeUserService.execute(id)
 
         return res.status(204).send()
     } catch (error) {
