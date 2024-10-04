@@ -8,17 +8,21 @@ interface UserRequest {
   telephone?: string;
 }
 
-class UpdateUserService {
-  execute(userId: number, user: UserRequest) {
-    return prismaClient.user.update({
-      data: {
-        ...user
-      },
-      where: {
-        id: userId
-      }
-    })
+export class UpdateUserService {
+  async execute(userId: string, user: UserRequest) {
+    try {
+      const updatedUser = await prismaClient.user.update({
+        data: {
+          ...user
+        },
+        where: {
+          id: userId
+        }
+      });
+
+      return updatedUser;
+    } catch (error: any) {
+      throw new Error('Error updating user: ' + error.message);
+    }
   }
 }
-
-export { UpdateUserService }

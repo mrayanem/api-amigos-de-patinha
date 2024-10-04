@@ -6,6 +6,9 @@ export class GetUserService {
       where: {
         id: userId, 
       },
+      omit: {
+        password: true
+      }
     });
 
     if (!user) {

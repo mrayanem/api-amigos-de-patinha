@@ -18,7 +18,6 @@ export class AuthUserService {
                 role: true
             }
         });
-        
 
         if (!user) {
             throw new Error("Usuário ou senha incorreto");
