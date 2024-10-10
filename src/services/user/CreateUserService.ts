@@ -11,27 +11,20 @@ interface UserRequest {
   telephone: string;
   roleId?: string;
   userId?: string;
+  status?: boolean;
 }
 
 export class CreateUserService {
-  async execute({ name, email, password, state, city, telephone, roleId, userId }: UserRequest) {
+  async execute({ name, email, password, state, city, telephone, roleId, userId, status = true }: UserRequest) {
 
-    //verificar se ele enviou um email
     if (!email) {
       throw new Error("Email incorreto")
     }
 
-     // Verificar se o CPF é válido 
-    // if (!cpf) {
-    //   throw new Error("CPF incorreto")
-    // }
-
-    //Verificar número
     if (!telephone) {
       throw new Error("Telefone incorreto")
     }
 
-    //verificar se esse email já está cadastrado na plataforma
     const userAlreadyExist = await prismaClient.user.findFirst({
       where: {
         email: email
@@ -41,16 +34,6 @@ export class CreateUserService {
     if (userAlreadyExist) {
       throw new Error("Usuário já existente")
     }
-
-    // const userWithSameCPF = await prismaClient.user.findFirst({
-    //   where: {
-    //     cpf: cpf
-    //   }
-    // });
-
-    // if (userWithSameCPF) {
-    //   throw new Error("Usuário com o mesmo CPF já existente");
-    // }
 
     const userWithSameTel = await prismaClient.user.findFirst({
       where: {
@@ -81,7 +64,8 @@ export class CreateUserService {
         city,
         telephone,
         password: passwordHash,
-        roleId: roleUser.id
+        roleId: roleUser.id,
+        status
       },
       select: {
         id: true,
@@ -90,6 +74,7 @@ export class CreateUserService {
         state: true,
         city: true,
         telephone: true,
+        status: true
       }
     })
 

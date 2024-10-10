@@ -9,7 +9,7 @@ interface AuthRequest {
 
 export class AuthUserService {
     async execute({ email, password }: AuthRequest) {
-        // verificar se o usuário existe
+
         const user = await prismaClient.user.findUnique({
             where: {
                 email: email
@@ -23,20 +23,22 @@ export class AuthUserService {
             throw new Error("Usuário ou senha incorreto");
         }
 
-        // verificar a senha
+        if (!user.status) {
+            throw new Error("Conta inativa. Entre em contato com o suporte.");
+        }
+
         const passwordMatch = await compare(password, user.password);
 
         if (!passwordMatch) {
             throw new Error("Usuário ou senha incorreto");
         }
 
-        // obter o segredo do JWT
         const jwtSecret = process.env.JWT_SECRET;
         if (!jwtSecret) {
             throw new Error("JWT_SECRET não está definido");
         }
 
-        // gerar um token JWT e devolver os dados
+
         const token = sign(
             {
                 id: user.id,

@@ -41,7 +41,7 @@ userRoutes
 
     return getUserController.handle(req, res);
   })
-  .delete('/user/:id', isAuthenticated(), is(['admin']), async (req: Request, res: Response) => {
+  .delete('/user/:id', isAuthenticated(), is(['client', 'admin']), async (req: Request, res: Response) => {
     const removeUserService = new RemoveUserService();
     const removeUserController = new RemoveUserController(removeUserService);
 
