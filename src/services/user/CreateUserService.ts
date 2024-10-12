@@ -1,4 +1,3 @@
-import { is } from "@middlewares/permissions";
 import prismaClient from "../../prisma";
 import { hash } from "bcryptjs";
 
