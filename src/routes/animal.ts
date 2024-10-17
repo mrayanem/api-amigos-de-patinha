@@ -1,4 +1,5 @@
 import express, { Router } from "express"
+import multer from "multer"
 import { CreateAnimalController } from "../controllers/animal/CreateAnimalController"
 import { ListAnimalsController } from "../controllers/animal/ListAnimalsController"
 import { RemoveAnimalController } from "../controllers/animal/RemoveAnimalController"
@@ -7,14 +8,23 @@ import { CreateAnimalService } from "../services/animal/CreateAnimalService"
 import { ListAnimalsService } from "../services/animal/ListAnimalService"
 import { RemoveAnimalService } from "../services/animal/RemoveAnimalService"
 import { UpdateAnimalsService } from "../services/animal/UpdateAnimalService"
-
 import { createAnimalValidation } from "./validations"
 
 const animalRoutes: Router = express.Router()
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 // --ROTAS ANIMAL CADASTRO
 animalRoutes
-  .post('/animals', createAnimalValidation, async (req, res) => {
+  .post('/animals', upload.single("file"), (req, res, next) => {
+    try {
+      const data = JSON.parse(req.body.data);
+      req.body = { ...req.body, ...data, file: req.file };
+    } catch (e: any) {
+      throw new Error(e);
+    }
+    next();
+  },createAnimalValidation, async (req, res) => {
     const createAnimalService = new CreateAnimalService()
     const createAnimalController = new CreateAnimalController(createAnimalService)
     

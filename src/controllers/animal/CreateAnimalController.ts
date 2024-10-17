@@ -6,22 +6,22 @@ export class CreateAnimalController {
   constructor(private createAnimalService: CreateAnimalService) {}
 
   async handle(req: Request, res: Response) {
-    const errors = validationResult(req)
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() })
-    }
-
-    const { userId, body: { name, sex, age, animalSize, specieId, state, city, description, photoAnimal, livesWellIn, sociableWith, vetCare} } = req;
-
     try {
+      const errors = validationResult(req)
+
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() })
+      }
+
+      const { userId, body: { name, sex, age, animalSize, specie, state, city, description, photoAnimal, livesWellIn, sociableWith, vetCare, file } } = req;
+    
       const animal = await this.createAnimalService.execute({
         userId,
         name,
         sex,
         age,
         animalSize,
-        specieId,
+        specie,
         state,
         city,
         description,
@@ -29,6 +29,7 @@ export class CreateAnimalController {
         livesWellIn,
         sociableWith,
         vetCare,
+        file: file as any
       });
 
       return res.json(animal);
