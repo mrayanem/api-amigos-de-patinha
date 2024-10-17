@@ -21,7 +21,8 @@ async function main() {
 
   app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     if (err instanceof Error) {
-      res.status(400).json({
+      console.log(err.message)
+      return res.status(400).json({
         success: false,
         data: err.message
       })
@@ -31,8 +32,6 @@ async function main() {
       success: false,
       data: `Internal server error - ${err}`
     })
-
-    next()
   })
 
 }

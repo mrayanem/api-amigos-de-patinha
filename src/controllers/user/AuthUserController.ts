@@ -15,6 +15,5 @@ export class AuthUserController{
 
         
         return res.json({ success: true, data: auth }).status(200);
-
     }
 }
