@@ -17,9 +17,9 @@ export const createAnimalValidation = [
   .isIn(['PEQUENO', 'MEDIO', 'GRANDE']).withMessage('O tamanho do animal deve ser "PEQUENO", "MEDIO" ou "GRANDE"')
   .notEmpty().withMessage('O tamanho do animal é obrigatório'),
 
-  body('specieId')
-  .isString().withMessage('O specieId deve ser uma string')
-  .notEmpty().withMessage('O specieId é obrigatório'),
+  body('specie')
+  .isIn(['GATO', 'CACHORRO']).withMessage('A Espécie do animal deve ser "GATO", "CACHORRO"')
+  .notEmpty().withMessage('O specie é obrigatório'),
 
   body('state')
   .isString().withMessage('O estado deve ser uma string')
@@ -33,9 +33,9 @@ export const createAnimalValidation = [
   .isString().withMessage('A descrição deve ser uma string')
   .notEmpty().withMessage('A descrição é obrigatória'),
 
-  body('photoAnimal')
-  .isURL().withMessage('A foto do animal deve ser uma URL válida')
-  .notEmpty().withMessage('A foto do animal é obrigatória'),
+  // body('photoAnimal')
+  // .isURL().withMessage('A foto do animal deve ser uma URL válida')
+  // .notEmpty().withMessage('A foto do animal é obrigatória'),
 
   body('livesWellIn')
   .isIn(['APARTAMENTO', 'CASA']).withMessage('O ambiente de vida deve ser "APARTAMENTO" ou "CASA"')
@@ -47,5 +47,8 @@ export const createAnimalValidation = [
 
   body('vetCare')
   .isIn(['CASTRADO', 'VERMIFUGADO', 'VACINADO']).withMessage('O cuidado veterinário deve ser "CASTRADO", "VERMIFUGADO" ou "VACINADO"')
-  .notEmpty().withMessage('O cuidado veterinário é obrigatório')
+  .notEmpty().withMessage('O cuidado veterinário é obrigatório'),
+
+  body('file')
+  .notEmpty().withMessage('A foto do animal é obrigatória'),
 ]
