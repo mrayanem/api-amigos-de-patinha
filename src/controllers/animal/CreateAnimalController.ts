@@ -13,8 +13,8 @@ export class CreateAnimalController {
         return res.status(400).json({ errors: errors.array() })
       }
 
-      const { userId, body: { name, sex, age, animalSize, specie, state, city, description, photoAnimal, livesWellIn, sociableWith, vetCare, file } } = req;
-    
+      const { userId, body: { name, sex, age, animalSize, specie, state, city, description, livesWellIn, sociableWith, vetCare, photoAnimal } } = req;
+
       const animal = await this.createAnimalService.execute({
         userId,
         name,
@@ -25,11 +25,10 @@ export class CreateAnimalController {
         state,
         city,
         description,
-        photoAnimal,
         livesWellIn,
         sociableWith,
         vetCare,
-        file: file as any
+        photoAnimal
       });
 
       return res.json(animal);

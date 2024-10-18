@@ -49,6 +49,6 @@ export const createAnimalValidation = [
   .isIn(['CASTRADO', 'VERMIFUGADO', 'VACINADO']).withMessage('O cuidado veterinário deve ser "CASTRADO", "VERMIFUGADO" ou "VACINADO"')
   .notEmpty().withMessage('O cuidado veterinário é obrigatório'),
 
-  body('file')
+  body('photoAnimal')
   .notEmpty().withMessage('A foto do animal é obrigatória'),
 ]

@@ -16,10 +16,10 @@ const upload = multer({ storage: storage });
 
 // --ROTAS ANIMAL CADASTRO
 animalRoutes
-  .post('/animals', upload.single("file"), (req, res, next) => {
+  .post('/animals', upload.single("photoAnimal"), (req, res, next) => {
     try {
       const data = JSON.parse(req.body.data);
-      req.body = { ...req.body, ...data, file: req.file };
+      req.body = { ...req.body, ...data, photoAnimal: req.file as Express.Multer.File };
     } catch (e: any) {
       throw new Error(e);
     }
