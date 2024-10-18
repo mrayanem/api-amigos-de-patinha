@@ -98,7 +98,7 @@ model Animal {
 }
 
 model SubAnimalCategory {
-  id             String         @id @default(uuid())
+  id             String         @id @default(uuid()) @unique
   categoryId     String         @unique
   animalCategory AnimalCategory @relation(fields: [categoryId], references: [id])
 
@@ -109,7 +109,7 @@ model SubAnimalCategory {
 }
 
 model AnimalCategory {
-  id                String             @id @default(uuid())
+  id                String             @id @default(uuid()) @unique
   name              String
   subAnimalCategory SubAnimalCategory?
 
@@ -120,7 +120,7 @@ model AnimalCategory {
 }
 
 model Role {
-  id          String   @id @default(uuid()) // talvez? UUID
+  id          String   @id @default(uuid()) @unique
   name        String   @unique
   description String
 
