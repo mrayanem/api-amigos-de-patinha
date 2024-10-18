@@ -3,6 +3,7 @@ import prismaClient from "../../prisma";
 import { Blob } from "buffer";
 import { randomUUID } from "crypto";
 import { UTFile } from "uploadthing/server";
+
 interface AnimalRequest {
   userId: string;
   name: string;
