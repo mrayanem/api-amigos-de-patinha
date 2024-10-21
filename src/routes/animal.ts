@@ -9,6 +9,8 @@ import { ListAnimalsService } from "../services/animal/ListAnimalService"
 import { RemoveAnimalService } from "../services/animal/RemoveAnimalService"
 import { UpdateAnimalsService } from "../services/animal/UpdateAnimalService"
 import { createAnimalValidation } from "./validations"
+import { GetAnimalService } from "@services/animal/GetAnimalService"
+import { GetAnimalController } from "@controllers/animal/GetAnimalCotroller"
 
 const animalRoutes: Router = express.Router()
 const storage = multer.memoryStorage();
@@ -35,6 +37,12 @@ animalRoutes
     const listAnimalsController = new ListAnimalsController(listAnimalsService)
     
     return listAnimalsController.handle(req, res)
+  })
+  .get('/animal/:id', async (req, res) => {
+    const getAnimalService = new GetAnimalService();
+    const getAnimalController = new GetAnimalController(getAnimalService);
+
+    return getAnimalController.handle(req, res);
   })
   .delete('/animals', async (req, res) => {
     const removeAnimalService = new RemoveAnimalService()

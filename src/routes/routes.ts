@@ -8,7 +8,8 @@ const routes: Router = express.Router()
 
 routes
   .use('/', userRoutes)
-  .use('/', isAuthenticated(), animalRoutes)
+  // .use('/', isAuthenticated(), animalRoutes)
+  .use('/', animalRoutes)
   .use('/', specieRoutes)
 
 // -- ROTA DE LOGIN
