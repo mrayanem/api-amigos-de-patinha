@@ -7,9 +7,9 @@ export class ListUsersController {
   async handle(req: Request, res: Response) {
 
       const users = await this.listUsersService.execute();
-
+        
       try {
-          return res.json(users);
+          return res.json(users).status(200);
       } catch {
           return res.status(400)
       }

@@ -8,12 +8,13 @@ export class UpdateAnimalController {
   async handle(req: Request, res: Response) {
     const { id } = req.params;
 
-    const { userId, body: { name, sex, age, animalSize, specieId, state, city, description, photoAnimal, livesWellIn, sociableWith, vetCare, status } } = req.body;
+    const { userId, name, sex, age, animalSize, specieId, state, city, description, photoAnimal, livesWellIn, sociableWith, vetCare, status  } = req.body;
 
     if (!id) {
+        console.log(id)
         return res.status(400)
     }
-
+    console.log({ name, sex, age, animalSize, specieId, state, city, description, photoAnimal, livesWellIn, sociableWith, vetCare, status })
     const newId = (id)
 
     try {

@@ -5,6 +5,9 @@ export class GetAnimalService {
     const animal = await prismaClient.animal.findUnique({
       where: {
         id: animalId, 
+      },
+      include: {
+        user: true
       }
     });
 
