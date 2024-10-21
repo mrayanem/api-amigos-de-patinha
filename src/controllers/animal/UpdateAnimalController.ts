@@ -8,7 +8,7 @@ export class UpdateAnimalController {
   async handle(req: Request, res: Response) {
     const { id } = req.params;
 
-    const { userId, body: { name, sex, age, animalSize, specieId, state, city, description, photoAnimal, livesWellIn, sociableWith, vetCare } } = req.body;
+    const { userId, body: { name, sex, age, animalSize, specieId, state, city, description, photoAnimal, livesWellIn, sociableWith, vetCare, status } } = req.body;
 
     if (!id) {
         return res.status(400)
@@ -17,7 +17,7 @@ export class UpdateAnimalController {
     const newId = (id)
 
     try {
-        const animal = await this.updateAnimalsService.execute(newId, { userId, name, sex, age, animalSize, specieId, state, city, description, photoAnimal, livesWellIn, sociableWith, vetCare })
+        const animal = await this.updateAnimalsService.execute(newId, { userId, name, sex, age, animalSize, specieId, state, city, description, photoAnimal, livesWellIn, sociableWith, vetCare, status })
 
         return res.json(animal).status(200)
     } catch (error) {

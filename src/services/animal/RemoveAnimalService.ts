@@ -2,10 +2,13 @@ import prismaClient from "../../prisma";
 
 export class RemoveAnimalService {
   execute(animalId: string) {
-    return prismaClient.animal.delete({
+    return prismaClient.animal.update({
       where: {
-        id: animalId
-      }
-    })
+        id: animalId,
+      },
+      data: {
+        status: false,
+      },
+    });
   }
 }

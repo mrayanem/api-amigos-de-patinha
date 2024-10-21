@@ -85,6 +85,7 @@ model Animal {
   description String
   photoAnimal String
   livesWellIn String
+  status     Boolean  @default(true)
   sociableWith sociableWith
   vetCare vetCare
   user        User     @relation(fields: [userId], references: [id])

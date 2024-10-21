@@ -14,6 +14,7 @@ interface AnimalRequest {
   state: string;
   city: string;
   description: string;
+  status?: boolean;
   livesWellIn: 'APARTAMENTO'|'CASA';
   sociableWith: 'DESCONHECIDOS'|'CRIANCAS'|'OUTROS_ANIMAIS';
   vetCare: 'CASTRADO'|'VERMIFUGADO'|'VACINADO'
@@ -21,7 +22,7 @@ interface AnimalRequest {
 }
 
 export class CreateAnimalService {
-  async execute({ userId, name, sex, age, animalSize, specie, state, city, description, livesWellIn, sociableWith, vetCare, photoAnimal }: AnimalRequest) {
+  async execute({ userId, name, sex, age, animalSize, specie, state, city, description, livesWellIn, sociableWith, vetCare, photoAnimal, status = true }: AnimalRequest) {
     try {
       const photoAnimalId = randomUUID().toString();
 
@@ -35,6 +36,7 @@ export class CreateAnimalService {
           specie,
           state,
           city,
+          status: true,
           description,
           photoAnimal: photoAnimalId,
           livesWellIn,

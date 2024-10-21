@@ -3,28 +3,29 @@ import prismaClient from "../../prisma";
 interface AnimalRequest {
   userId?: string;
   name?: string;
-  sex?: 'MACHO'|'FEMEA';
+  sex?: 'MACHO' | 'FEMEA';
   age?: number;
-  animalSize?: 'PEQUENO'|'GRANDE'|'MEDIO';
+  animalSize?: 'PEQUENO' | 'GRANDE' | 'MEDIO';
   specieId?: string;
   state?: string;
   city?: string;
   description?: string;
   photoAnimal?: string;
-  livesWellIn?: 'APARTAMENTO'|'CASA';
-  sociableWith?: 'DESCONHECIDOS'|'CRIANCAS'|'OUTROS_ANIMAIS';
-  vetCare?: 'CASTRADO'|'VERMIFUGADO'|'VACINADO'
+  status?: boolean; 
+  livesWellIn?: 'APARTAMENTO' | 'CASA';
+  sociableWith?: 'DESCONHECIDOS' | 'CRIANCAS' | 'OUTROS_ANIMAIS';
+  vetCare?: 'CASTRADO' | 'VERMIFUGADO' | 'VACINADO';
 }
 
 export class UpdateAnimalsService {
-  execute(animalId: string, animal: AnimalRequest) {
+  async execute(animalId: string, animal: AnimalRequest) {
     return prismaClient.animal.update({
       data: {
-        ...animal
+        ...animal,
       },
       where: {
-        id: animalId
-      }
-    })
+        id: animalId,
+      },
+    });
   }
 }
