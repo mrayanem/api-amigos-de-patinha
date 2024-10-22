@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import prismaClient from "prisma";
+import prismaClient from "../prisma";
 
 export function is(rolesRoutes: string[]) {
   return async (req: Request, res: Response, next: NextFunction) => {
