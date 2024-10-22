@@ -18,5 +18,5 @@
     "autoJobCancelation": true
   },
   "installCommand": "pnpm install --production --frozen-lockfile",
-  "buildCommand": "pnpm vercel-build"
+  "buildCommand": "yarn vercel-build"
 }
