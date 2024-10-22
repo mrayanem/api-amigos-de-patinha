@@ -8,13 +8,13 @@ interface UserRequest {
   state: string;
   city: string;
   telephone: string;
-  roleId?: string;
+  role?: string;
   userId?: string;
   status?: boolean;
 }
 
 export class CreateUserService {
-  async execute({ name, email, password, state, city, telephone, roleId, userId, status = true }: UserRequest) {
+  async execute({ name, email, password, state, city, telephone, role, userId, status = true }: UserRequest) {
 
     if (!email) {
       throw new Error("Email incorreto")
@@ -46,14 +46,8 @@ export class CreateUserService {
 
     const passwordHash = await hash(password, 8)
 
-    console.log(userId, roleId)
-    const roleUser = await prismaClient.role.findFirst({
-      where: userId && roleId ? { id: roleId } : { name: 'client' }
-    })
-
-    if (!roleUser?.id) {
-      throw new Error("Perfil do usuario inexistente!");
-    }
+    console.log(userId, role)
+    const roleUser = userId && role ? role : "client"
 
     const user = await prismaClient.user.create({
       data: {
@@ -63,7 +57,7 @@ export class CreateUserService {
         city,
         telephone,
         password: passwordHash,
-        roleId: roleUser.id,
+        role: roleUser as "client" | "admin",
         status
       },
       select: {

@@ -6,17 +6,14 @@ export function is(rolesRoutes: string[]) {
     const { userId } = req;
 
     const user = await prismaClient.user.findFirst({
-      where: { id: userId },
-      include: {
-        role: true
-      }
+      where: { id: userId }
     });
 
     if (!user) {
       return res.status(400).json("User does not exists");
     }
 
-    const roleExists = rolesRoutes.includes(user.role.name)
+    const roleExists = rolesRoutes.includes(user.role)
 
     if (!roleExists) {
       return res.status(401).end();

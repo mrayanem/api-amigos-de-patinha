@@ -26,7 +26,7 @@ export const createUserValidation = [
     .matches(/^\d{2}-\d{5}-\d{4}$/).withMessage('O telefone deve estar no formato 00-00000-0000')
     .notEmpty().withMessage('O telefone é obrigatório'),
 
-  body('roleId')
-    .isString().withMessage('O roleId deve ser uma string válida')
-    .notEmpty().withMessage('O roleId é obrigatório')
+  body('role')
+    .isString().withMessage('O role deve ser uma string válida')
+    .notEmpty().withMessage('O role é obrigatório')
 ]

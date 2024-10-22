@@ -12,7 +12,7 @@ export class CreateUserController {
       return res.status(400).json({ errors: errors.array() })
     }
 
-      const { body : { name, email, password, state, city, telephone, roleId, status }, userId } = req;
+      const { body : { name, email, password, state, city, telephone, role, status }, userId } = req;
 
       const user = await this.createUserService.execute({
           name,
@@ -21,7 +21,7 @@ export class CreateUserController {
           state,
           city,
           telephone,
-          roleId,
+          role,
           userId,
           status
       });
