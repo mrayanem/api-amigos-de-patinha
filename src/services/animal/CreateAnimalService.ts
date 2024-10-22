@@ -1,4 +1,4 @@
-import { utapi } from "uploadthing";
+import { utapi } from "../../uploadthing";
 import prismaClient from "../../prisma";
 import { Blob } from "buffer";
 import { randomUUID } from "crypto";

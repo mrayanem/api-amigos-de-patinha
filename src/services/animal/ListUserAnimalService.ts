@@ -1,4 +1,4 @@
-import { utapi } from "uploadthing";
+import { utapi } from "../../uploadthing";
 import prismaClient from "../../prisma";
 import { Request } from "express"
 

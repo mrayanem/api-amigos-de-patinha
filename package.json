@@ -1,18 +1,29 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/server.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts"
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
+    "start": "node dist/server.js",
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored --no-comments",
+    "vercel-build": "pnpm build && pnpm prisma-build",
+    "prisma-build": "npx prisma generate && npx prisma migrate deploy"
   },
   "devDependencies": {
+    "@babel/cli": "^7.25.7",
+    "@babel/core": "^7.25.8",
+    "@babel/helper-compilation-targets": "^7.25.7",
+    "@babel/node": "^7.25.7",
+    "@babel/preset-env": "^7.25.8",
+    "@babel/preset-typescript": "^7.25.7",
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.7",
-    "@types/node": "^20.16.12",
+    "@types/node": "^20.16.13",
     "@types/uuid": "^10.0.0",
+    "babel-plugin-module-resolver": "^5.0.2",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.6.3"

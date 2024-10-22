@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "builds" : [
+    {
+      "src": "dist/server.js",
+      "use": "@vercel/node"
+    }
+
+  ],
+  "routes": [
+      {
+        "src": "(.*)",
+        "dest": "dist/server.js"
+      }
+  ],
+  "github": {
+    "silent": true,
+    "autoJobCancelation": true
+  },
+  "installCommand": "pnpm install --production --frozen-lockfile",
+  "buildCommand": "pnpm vercel-build"
+}
